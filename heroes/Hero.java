@@ -31,6 +31,42 @@ public class Hero implements Inventory, Armed, Player, Healthy {
         this.health = health;
     }
 
+    public static Hero createHero(String string) throws Exception{
+        String[] strings = string.split(" ");
+        String heroClass = strings[1];
+        String username = strings[2];
+        int level = Integer.parseInt(strings[3]);
+        int health = Integer.parseInt(strings[4]);
+
+        System.out.printf("%s %s [%s level %s health] is online%n", heroClass, username, level, health);
+
+        switch (heroClass) {
+            case "Elf" -> {
+                int arrowsCount = Integer.parseInt(strings[5]);
+                return new Elf(username, level, health, arrowsCount);
+            }
+
+            case "Wizard" -> {
+                int mana = Integer.parseInt(strings[5]);
+                int spellPower = Integer.parseInt(strings[6]);
+                return new Wizard(username, level, health, mana, spellPower);
+            }
+
+            case "Knight" -> {
+                int strength = Integer.parseInt(strings[5]);
+                int forcePower = Integer.parseInt(strings[6]);
+                return new Knight(username, level, health, strength, forcePower);
+            }
+
+            default -> throw new IllegalArgumentException("Unknown hero class: " + heroClass);
+        }
+    }
+
+    @Override
+    public String action(Player player) {
+        return null;
+    }
+
     @Override
     public boolean change(Arming item) {
         return false;
@@ -79,11 +115,6 @@ public class Hero implements Inventory, Armed, Player, Healthy {
     @Override
     public void levelUp() {
 
-    }
-
-    @Override
-    public String action(Player player) {
-        return null;
     }
 
     @Override
